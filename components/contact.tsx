@@ -12,9 +12,16 @@ import {
   SelectValue,
 } from "@/components/ui/select"
 import { Card } from "@/components/ui/card"
-import { Phone, Mail, MapPin, Clock, ArrowRight, CheckCircle2, Loader2 } from "lucide-react"
+import { Phone, Mail, MapPin, Clock, ArrowRight, CheckCircle2, AlertCircle, Loader2 } from "lucide-react"
 import { motion } from "framer-motion"
 import { useState, type FormEvent } from "react"
+import {
+  emptyForm,
+  services,
+  validateForm,
+  type FormErrors,
+  type FormValues,
+} from "@/lib/contact"
 
 const contactInfo = [
   {
@@ -44,61 +51,6 @@ const contactInfo = [
   },
 ]
 
-const services = [
-  { value: "engine-repair", label: "Engine Repair" },
-  { value: "shaft-line", label: "Shaft Line" },
-  { value: "ballast-tank", label: "Ballast Tank Coating" },
-  { value: "welding", label: "Welding" },
-  { value: "other", label: "Other" },
-]
-
-const emptyForm = {
-  name: "",
-  email: "",
-  phone: "",
-  service: "",
-  vessel: "",
-  message: "",
-}
-
-type FormValues = typeof emptyForm
-type FormErrors = Partial<Record<keyof FormValues, string>>
-
-const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
-const phonePattern = /^[+\d][\d\s()-]{6,}$/
-
-function validateForm(values: FormValues): FormErrors {
-  const errors: FormErrors = {}
-
-  if (!values.name.trim()) {
-    errors.name = "Enter your full name."
-  } else if (values.name.trim().length < 2) {
-    errors.name = "Name must be at least 2 characters."
-  }
-
-  if (!values.email.trim()) {
-    errors.email = "Enter your email address."
-  } else if (!emailPattern.test(values.email.trim())) {
-    errors.email = "Enter a valid email address."
-  }
-
-  if (values.phone.trim() && !phonePattern.test(values.phone.trim())) {
-    errors.phone = "Enter a valid phone number."
-  }
-
-  if (!values.service) {
-    errors.service = "Select a service."
-  }
-
-  if (!values.message.trim()) {
-    errors.message = "Enter a message."
-  } else if (values.message.trim().length < 10) {
-    errors.message = "Message must be at least 10 characters."
-  }
-
-  return errors
-}
-
 function fieldClass(hasError: boolean) {
   return `bg-card text-white placeholder:text-muted-foreground h-12 ${
     hasError ? "border-red-500 focus:border-red-500" : "border-border focus:border-primary"
@@ -110,31 +62,56 @@ export function Contact() {
   const [errors, setErrors] = useState<FormErrors>({})
   const [sending, setSending] = useState(false)
   const [sent, setSent] = useState(false)
+  const [submitError, setSubmitError] = useState<string | null>(null)
   const [formKey, setFormKey] = useState(0)
 
   function updateField(field: keyof FormValues, value: string) {
     setValues((current) => ({ ...current, [field]: value }))
     setErrors((current) => ({ ...current, [field]: undefined }))
     setSent(false)
+    setSubmitError(null)
   }
 
-  function handleSubmit(event: FormEvent<HTMLFormElement>) {
+  async function handleSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault()
     const nextErrors = validateForm(values)
     setErrors(nextErrors)
+    setSubmitError(null)
     if (Object.keys(nextErrors).length > 0) {
       setSent(false)
       return
     }
 
+    const website = new FormData(event.currentTarget).get("website")
+
     setSending(true)
     setSent(false)
-    window.setTimeout(() => {
-      setSending(false)
+    try {
+      const response = await fetch("/api/contact", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ ...values, website }),
+      })
+      const data = await response.json().catch(() => ({}))
+
+      if (!response.ok) {
+        if (data.errors) setErrors(data.errors)
+        setSubmitError(
+          data.errors
+            ? "Please check the highlighted fields."
+            : "Something went wrong. Please try again or email us at info@seafix.com.",
+        )
+        return
+      }
+
       setSent(true)
       setValues(emptyForm)
       setFormKey((key) => key + 1)
-    }, 1400)
+    } catch {
+      setSubmitError("Network error. Please check your connection and try again.")
+    } finally {
+      setSending(false)
+    }
   }
 
   return (
@@ -178,7 +155,25 @@ export function Contact() {
                 </div>
               </div>
             )}
+            {submitError && (
+              <div
+                role="alert"
+                className="mb-4 flex items-start gap-3 rounded-lg border border-red-500/40 bg-red-500/10 px-4 py-3 text-white"
+              >
+                <AlertCircle className="mt-0.5 h-5 w-5 shrink-0 text-red-400" />
+                <p className="text-sm">{submitError}</p>
+              </div>
+            )}
             <form onSubmit={handleSubmit} noValidate className="space-y-4">
+              {/* Honeypot field for spam bots — hidden from real visitors */}
+              <input
+                type="text"
+                name="website"
+                tabIndex={-1}
+                autoComplete="off"
+                aria-hidden="true"
+                className="absolute -left-[9999px] h-0 w-0 opacity-0"
+              />
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 <div>
                   <Input
