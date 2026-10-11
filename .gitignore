@@ -1,0 +1,43 @@
+# Dependencies
+node_modules
+.pnp
+.pnp.js
+
+# Next.js
+.next
+out
+
+# Build / test
+build
+dist
+coverage
+.nyc_output
+*.tsbuildinfo
+
+# Debug
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+.pnpm-debug.log*
+
+# Секреты и локальные env (шаблон !.env.example остаётся в репо)
+.env*
+!.env.example
+
+# Vercel
+.vercel
+
+# Turbo (если подключите monorepo)
+.turbo
+
+# Caches
+.eslintcache
+*.pem
+
+# OS / editor
+.DS_Store
+Thumbs.db
+.idea
+*.swp
+*.swo
+*~
