@@ -38,7 +38,7 @@ export default async function ProjectPage({ params }: Props) {
     { icon: Ship, label: "Vessel", value: project.vessel },
     { icon: MapPin, label: "Location", value: project.location },
     { icon: Clock, label: "Duration", value: project.duration },
-    { icon: Calendar, label: "Year", value: project.year },
+    { icon: Calendar, label: "Date", value: project.date },
   ]
 
   return (

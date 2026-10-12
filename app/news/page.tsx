@@ -11,7 +11,7 @@ export const metadata: Metadata = {
 const updates = projectList.map((project) => ({
   href: `/projects/${project.slug}`,
   title: `${project.title} — ${project.vessel}`,
-  text: `${project.location}, ${project.year}. ${project.summary}`,
+  text: `${project.location}, ${project.date}. ${project.summary}`,
 }))
 
 export default function NewsPage() {

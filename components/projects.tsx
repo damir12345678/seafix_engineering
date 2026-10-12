@@ -101,7 +101,7 @@ export function Projects({
                       {project.location}
                     </span>
                     <span>{project.duration}</span>
-                    <span>{project.year}</span>
+                    <span>{project.date}</span>
                   </div>
                 </div>
                 {/* Hover Arrow */}
