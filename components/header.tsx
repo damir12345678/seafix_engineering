@@ -57,11 +57,11 @@ export function Header() {
           {/* Desktop CTA */}
           <div className="hidden lg:flex items-center gap-6">
             <a
-              href="tel:+13055550198"
+              href="tel:+97144389200"
               className="flex items-center gap-2 text-muted-foreground hover:text-white transition-colors"
             >
               <Phone className="h-4 w-4" />
-              <span className="text-sm">+1 (305) 555-0198</span>
+              <span className="text-sm">+971 4 438 9200</span>
             </a>
             <Button asChild className="bg-primary hover:bg-[#1D4ED8] text-white font-semibold">
               <a href="/#contact">
@@ -101,11 +101,11 @@ export function Header() {
               </Link>
             ))}
             <a
-              href="tel:+13055550198"
+              href="tel:+97144389200"
               className="flex items-center gap-2 text-muted-foreground hover:text-white transition-colors py-2"
             >
               <Phone className="h-4 w-4" />
-              <span>+1 (305) 555-0198</span>
+              <span>+971 4 438 9200</span>
             </a>
             <Button asChild className="bg-primary hover:bg-[#1D4ED8] text-white font-semibold w-full mt-2">
               <a href="/#contact" onClick={() => setIsMobileMenuOpen(false)}>
