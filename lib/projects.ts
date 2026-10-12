@@ -87,7 +87,7 @@ export const projectList: Project[] = [
     service: "navigation-bridge",
     duration: "14 hours",
     date: "January 2026",
-    image: "/images/project-blackout-recovery.jpg",
+    image: "/images/service-navigation-bridge.jpg",
     summary:
       "Restored a failed Furuno FAR-3220 radar and completed the overdue VDR annual performance test before a Port State Control inspection.",
     challenge:
