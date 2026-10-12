@@ -25,6 +25,7 @@ export default function AboutPage() {
           </>
         }
         description="Maritime engineers from Dubai, supporting vessels in any port around the world."
+        image="/images/page-about.jpg"
         breadcrumbs={[{ name: "About", href: "/about" }]}
       />
       <About showLink={false} />

@@ -22,6 +22,7 @@ export default function ProjectsPage() {
           </>
         }
         description="Case studies from engine rooms, bridges, ballast tanks and dry docks across the Gulf."
+        image="/images/page-projects.jpg"
         breadcrumbs={[{ name: "Projects", href: "/projects" }]}
       />
       <Projects showLink={false} />

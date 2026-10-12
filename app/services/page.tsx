@@ -23,6 +23,7 @@ export default function ServicesPage() {
           </>
         }
         description="Repair, maintenance and engineering for vessels of all types, on board or in the workshop, 24/7."
+        image="/images/page-services.jpg"
         breadcrumbs={[{ name: "Services", href: "/services" }]}
       />
       <div className="bg-[#0A0E1A] pt-16 lg:pt-20">

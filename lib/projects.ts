@@ -56,7 +56,7 @@ export const projectList: Project[] = [
     duration: "36 hours",
     year: "2026",
     image:
-      "https://images.unsplash.com/photo-1749867053314-ebfa14d9b9c4?q=80&w=1470&auto=format&fit=crop",
+      "/images/project-blackout-recovery.jpg",
     summary:
       "Fly electrician attendance to find and fix the cause of repeated blackouts on the main switchboard.",
     challenge:
@@ -88,7 +88,7 @@ export const projectList: Project[] = [
     duration: "4 days",
     year: "2026",
     image:
-      "https://images.unsplash.com/photo-1568347877321-f8935c7dc5a3?q=80&w=1470&auto=format&fit=crop",
+      "/images/project-ecdis-radar.jpg",
     summary:
       "Replacement of two ECDIS units and the X-band radar during cargo operations.",
     challenge:
@@ -120,7 +120,7 @@ export const projectList: Project[] = [
     duration: "6 days",
     year: "2025",
     image:
-      "https://images.unsplash.com/photo-1777315169375-5408ebea2734?q=80&w=1470&auto=format&fit=crop",
+      "/images/project-shaft-line.jpg",
     summary:
       "Shaft line alignment and stern tube seal renewal during a scheduled dry docking.",
     challenge:
@@ -152,7 +152,7 @@ export const projectList: Project[] = [
     duration: "18 days",
     year: "2025",
     image:
-      "https://images.unsplash.com/photo-1672911920959-d68517d7a293?q=80&w=1470&auto=format&fit=crop",
+      "/images/project-ballast-recoating.jpg",
     summary:
       "Blasting and full recoating of four ballast tanks with a riding team during the voyage and in port.",
     challenge:
@@ -184,7 +184,7 @@ export const projectList: Project[] = [
     duration: "7 days",
     year: "2025",
     image:
-      "https://images.unsplash.com/photo-1504328345606-18bbc8c9d7d1?q=80&w=1470&auto=format&fit=crop",
+      "/images/project-hull-steel.jpg",
     summary:
       "Cropping and renewal of wasted side shell plating and internal frames after a class survey.",
     challenge:
