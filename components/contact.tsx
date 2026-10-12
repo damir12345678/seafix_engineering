@@ -32,9 +32,15 @@ const contactInfo = [
   },
   {
     icon: Mail,
-    title: "Email",
-    value: "info@seafix.com",
-    href: "mailto:info@seafix.com",
+    title: "Sales & Quotes",
+    value: "sales@seafixengineering.com",
+    href: "mailto:sales@seafixengineering.com",
+  },
+  {
+    icon: Mail,
+    title: "Repair & Service",
+    value: "repair@seafixengineering.com",
+    href: "mailto:repair@seafixengineering.com",
   },
   {
     icon: MapPin,
@@ -99,7 +105,7 @@ export function Contact() {
         setSubmitError(
           data.errors
             ? "Please check the highlighted fields."
-            : "Something went wrong. Please try again or email us at info@seafix.com.",
+            : "Something went wrong. Please try again or email us at sales@seafixengineering.com.",
         )
         return
       }
@@ -341,14 +347,14 @@ export function Contact() {
                 viewport={{ once: true }}
               >
                 <Card className="bg-card border-border hover:border-primary/50 p-6 flex items-center gap-4 transition-all duration-300 group cursor-pointer">
-                  <div className="w-14 h-14 rounded-lg bg-primary/10 flex items-center justify-center group-hover:bg-primary/20 transition-colors">
+                  <div className="w-14 h-14 shrink-0 rounded-lg bg-primary/10 flex items-center justify-center group-hover:bg-primary/20 transition-colors">
                     <info.icon className="h-6 w-6 text-primary" />
                   </div>
-                  <div>
+                  <div className="min-w-0">
                     <p className="text-muted-foreground text-sm mb-1">
                       {info.title}
                     </p>
-                    <p className="text-white font-semibold">{info.value}</p>
+                    <p className="text-white font-semibold break-all">{info.value}</p>
                   </div>
                 </Card>
               </motion.a>
