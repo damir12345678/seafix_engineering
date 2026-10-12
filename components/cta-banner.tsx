@@ -38,7 +38,7 @@ export function CTABanner() {
               variant="secondary"
               className="bg-white text-primary hover:bg-white/90 font-semibold"
             >
-              <a href="tel:+306983012050">
+              <a href="tel:+97144389200">
                 <Phone className="mr-2 h-5 w-5" />
                 CALL US NOW
               </a>

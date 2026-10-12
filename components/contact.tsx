@@ -23,12 +23,18 @@ import {
   type FormValues,
 } from "@/lib/contact"
 
+const officeAddress =
+  "Office 1402, Al Saaha Offices (Building B), Souk Al Bahar, Old Town Island, Downtown Dubai, Dubai, UAE"
+const mapQuery = encodeURIComponent("Al Saaha Offices, Souk Al Bahar, Downtown Dubai, UAE")
+const mapEmbedUrl = `https://maps.google.com/maps?q=${mapQuery}&z=16&output=embed`
+const mapLinkUrl = `https://www.google.com/maps/search/?api=1&query=${mapQuery}`
+
 const contactInfo = [
   {
     icon: Phone,
     title: "Phone",
-    value: "+30 69 830 12 050",
-    href: "tel:+306983012050",
+    value: "+971 4 438 9200",
+    href: "tel:+97144389200",
   },
   {
     icon: Mail,
@@ -45,15 +51,15 @@ const contactInfo = [
   {
     icon: MapPin,
     title: "Location",
-    value: "Athens, Greece",
-    href: "https://www.google.com/maps/search/?api=1&query=Athens%2C+Greece",
+    value: officeAddress,
+    href: mapLinkUrl,
     external: true,
   },
   {
     icon: Clock,
     title: "24/7 Emergency",
     value: "Always Available",
-    href: "tel:+306983012050",
+    href: "tel:+97144389200",
   },
 ]
 
@@ -354,28 +360,31 @@ export function Contact() {
                     <p className="text-muted-foreground text-sm mb-1">
                       {info.title}
                     </p>
-                    <p className="text-white font-semibold break-all">{info.value}</p>
+                    <p className="text-white font-semibold wrap-anywhere">{info.value}</p>
                   </div>
                 </Card>
               </motion.a>
             ))}
 
-            {/* Map Placeholder */}
-            <Card className="bg-card border-border overflow-hidden h-[200px] relative">
-              <div
-                className="absolute inset-0 bg-cover bg-center opacity-50"
-                style={{
-                  backgroundImage:
-                    "url('https://images.unsplash.com/photo-1524661135-423995f22d0b?q=80&w=1474&auto=format&fit=crop')",
-                }}
+            {/* Office map */}
+            <Card className="bg-card border-border overflow-hidden p-0 gap-0">
+              <iframe
+                title="SeaFix Engineering office on the map"
+                src={mapEmbedUrl}
+                className="block w-full h-[280px] border-0"
+                loading="lazy"
+                referrerPolicy="no-referrer-when-downgrade"
+                allowFullScreen
               />
-              <div className="absolute inset-0 bg-gradient-to-t from-card to-transparent" />
-              <div className="absolute bottom-4 left-4 flex items-center gap-2">
-                <MapPin className="h-5 w-5 text-primary" />
-                <span className="text-white font-medium">
-                  Athens, Greece
-                </span>
-              </div>
+              <a
+                href={mapLinkUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="flex items-start gap-2 p-4 text-sm text-white hover:text-primary transition-colors"
+              >
+                <MapPin className="mt-0.5 h-5 w-5 shrink-0 text-primary" />
+                <span>{officeAddress}</span>
+              </a>
             </Card>
           </motion.div>
         </div>

@@ -27,7 +27,7 @@ export default function PrivacyPage() {
       <h2>Questions</h2>
       <p>
         Write to <a href="mailto:sales@seafixengineering.com">sales@seafixengineering.com</a> or call{" "}
-        <a href="tel:+306983012050">+30 69 830 12 050</a>.
+        <a href="tel:+97144389200">+971 4 438 9200</a>.
       </p>
     </InfoPage>
   )
