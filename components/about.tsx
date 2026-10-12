@@ -34,8 +34,6 @@ export function About({ showLink = true }: { showLink?: boolean }) {
               />
               <div className="absolute inset-0 bg-gradient-to-t from-[#0D1526] via-transparent to-transparent" />
             </div>
-            {/* Decorative element */}
-            <div className="absolute -bottom-4 -right-4 w-24 h-24 border-4 border-primary rounded-lg hidden lg:block" />
           </motion.div>
 
           {/* Content */}
