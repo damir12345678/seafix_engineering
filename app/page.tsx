@@ -17,7 +17,7 @@ export default function Home() {
       <About />
       <Stats />
       <Industries />
-      <Projects />
+      <Projects limit={3} />
       <CTABanner />
       <Footer />
     </main>

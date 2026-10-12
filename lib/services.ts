@@ -24,7 +24,7 @@ export const serviceList: Service[] = [
     intro:
       "Our engineers overhaul and repair main and auxiliary engines on board and in the workshop. We plan the work around your schedule so the vessel is back in service as soon as possible.",
     image:
-      "https://images.unsplash.com/photo-1685720543979-e9524b3b0176?q=80&w=1470&auto=format&fit=crop",
+      "/images/service-engine-repair.jpg",
     icon: Settings,
     highlights: [
       "Main engine overhauls for 2-stroke and 4-stroke engines",
@@ -43,7 +43,7 @@ export const serviceList: Service[] = [
     intro:
       "From a single fault to a full system upgrade, we find and fix electrical problems on board. Our electricians work with switchboards, motors, generators and automation systems on all vessel types.",
     image:
-      "https://images.unsplash.com/photo-1749867053314-ebfa14d9b9c4?q=80&w=1470&auto=format&fit=crop",
+      "/images/service-marine-electrical.jpg",
     icon: Zap,
     highlights: [
       "Electrical troubleshooting and fault finding",
@@ -72,7 +72,7 @@ export const serviceList: Service[] = [
     intro:
       "We install, repair and maintain navigation and bridge equipment so your vessel stays safe and compliant. Our technicians troubleshoot faults on board and support you before surveys and inspections.",
     image:
-      "https://images.unsplash.com/photo-1568347877321-f8935c7dc5a3?q=80&w=1470&auto=format&fit=crop",
+      "/images/service-navigation-bridge.jpg",
     icon: Radar,
     highlights: [
       "ECDIS installation, updates and troubleshooting",
@@ -90,7 +90,7 @@ export const serviceList: Service[] = [
     intro:
       "Shaft line problems cause vibration, bearing wear and leaks. We measure, align and repair propeller shaft lines and stern tubes and give you a clear report of the condition.",
     image:
-      "https://images.unsplash.com/photo-1737391726794-45f1bcd7c6a2?q=80&w=1470&auto=format&fit=crop",
+      "/images/service-shaft-line.jpg",
     icon: Compass,
     highlights: [
       "Shaft alignment checks and corrections",
@@ -108,7 +108,7 @@ export const serviceList: Service[] = [
     intro:
       "Corrosion in ballast tanks is expensive to fix late. Our coating teams prepare surfaces and apply coatings to the manufacturer's specification, during voyage or in dock.",
     image:
-      "https://images.unsplash.com/photo-1703174360085-cd1627be78f8?q=80&w=1470&auto=format&fit=crop",
+      "/images/service-ballast-tank.jpg",
     icon: Droplets,
     highlights: [
       "Surface preparation: blasting and mechanical cleaning",
@@ -127,7 +127,7 @@ export const serviceList: Service[] = [
     intro:
       "Our welders repair hulls, structures and pipework on board and in the workshop. We work together with class surveyors when the repair requires it.",
     image:
-      "https://images.unsplash.com/photo-1504328345606-18bbc8c9d7d1?q=80&w=1470&auto=format&fit=crop",
+      "/images/service-welding.jpg",
     icon: Flame,
     highlights: [
       "Onboard and workshop welding",

@@ -21,7 +21,7 @@ export function Hero() {
         className="absolute inset-0 bg-cover bg-center bg-no-repeat"
         style={{
           backgroundImage:
-            "url('https://images.unsplash.com/photo-1568347877321-f8935c7dc5a3?q=80&w=2070&auto=format&fit=crop')",
+            "url('/images/hero.jpg')",
         }}
       />
       {/* Dark Overlay */}

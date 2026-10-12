@@ -28,8 +28,8 @@ export function About({ showLink = true }: { showLink?: boolean }) {
           >
             <div className="relative rounded-lg overflow-hidden">
               <img
-                src="https://images.unsplash.com/photo-1749867053314-ebfa14d9b9c4?q=80&w=1470&auto=format&fit=crop"
-                alt="Engineers working under a vessel hull"
+                src="/images/about.jpg"
+                alt="SeaFix engineers working in a ship's engine room"
                 className="w-full h-[400px] lg:h-[500px] object-cover"
               />
               <div className="absolute inset-0 bg-gradient-to-t from-[#0D1526] via-transparent to-transparent" />
