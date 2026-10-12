@@ -14,7 +14,7 @@ import {
 import { Card } from "@/components/ui/card"
 import { Phone, Mail, MapPin, Navigation, ArrowRight, CheckCircle2, AlertCircle, Loader2 } from "lucide-react"
 import { motion } from "framer-motion"
-import { useState, type FormEvent } from "react"
+import { useEffect, useState, type FormEvent } from "react"
 import {
   emptyForm,
   services,
@@ -64,6 +64,14 @@ export function Contact() {
   const [sent, setSent] = useState(false)
   const [submitError, setSubmitError] = useState<string | null>(null)
   const [formKey, setFormKey] = useState(0)
+
+  // Preselect the service when arriving from a service page (/contact?service=slug).
+  useEffect(() => {
+    const service = new URLSearchParams(window.location.search).get("service")
+    if (service && services.some((item) => item.value === service)) {
+      setValues((current) => ({ ...current, service }))
+    }
+  }, [])
 
   function updateField(field: keyof FormValues, value: string) {
     setValues((current) => ({ ...current, [field]: value }))

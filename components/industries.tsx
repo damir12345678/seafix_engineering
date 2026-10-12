@@ -60,7 +60,7 @@ export function Industries() {
             <motion.a
               key={industry.id}
               id={industry.id}
-              href="#contact"
+              href="/contact"
               className="group scroll-mt-28 bg-card hover:bg-card/80 border border-border hover:border-primary/50 rounded-lg p-6 text-center transition-all duration-300 cursor-pointer"
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}

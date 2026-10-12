@@ -1,5 +1,6 @@
 "use client"
 
+import Link from "next/link"
 import { Badge } from "@/components/ui/badge"
 import { Card } from "@/components/ui/card"
 import { ArrowRight } from "lucide-react"
@@ -10,7 +11,7 @@ const projects = [
     id: "project-engine-overhaul",
     title: "Engine Overhaul",
     type: "Bulk Carrier",
-    href: "#engine-repair",
+    href: "/services/engine-repair",
     image:
       "https://images.unsplash.com/photo-1569875875269-6943dc3154c4?q=80&w=1470&auto=format&fit=crop",
   },
@@ -18,7 +19,7 @@ const projects = [
     id: "project-shaft-line",
     title: "Shaft Line Restoration",
     type: "Container Ship",
-    href: "#shaft-line",
+    href: "/services/shaft-line",
     image:
       "https://images.unsplash.com/photo-1777315169375-5408ebea2734?q=80&w=1470&auto=format&fit=crop",
   },
@@ -26,13 +27,13 @@ const projects = [
     id: "project-ballast-coating",
     title: "Ballast Tank Coating",
     type: "Oil Tanker",
-    href: "#ballast-tank",
+    href: "/services/ballast-tank",
     image:
       "https://images.unsplash.com/photo-1672911920959-d68517d7a293?q=80&w=1470&auto=format&fit=crop",
   },
 ]
 
-export function Projects() {
+export function Projects({ showLink = true }: { showLink?: boolean }) {
   return (
     <section id="projects" className="scroll-mt-24 py-20 lg:py-32 bg-[#0A0E1A]">
       <div className="container mx-auto px-4 lg:px-8">
@@ -62,20 +63,22 @@ export function Projects() {
               RECENT PROJECTS
             </motion.h2>
           </div>
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5, delay: 0.2 }}
-            viewport={{ once: true }}
-          >
-            <a
-              href="#projects"
-              className="inline-flex items-center text-primary hover:text-[#1D4ED8] font-semibold mt-4 md:mt-0 transition-colors"
+          {showLink && (
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.5, delay: 0.2 }}
+              viewport={{ once: true }}
             >
-              VIEW ALL PROJECTS
-              <ArrowRight className="ml-2 h-4 w-4" />
-            </a>
-          </motion.div>
+              <Link
+                href="/projects"
+                className="inline-flex items-center text-primary hover:text-[#1D4ED8] font-semibold mt-4 md:mt-0 transition-colors"
+              >
+                VIEW ALL PROJECTS
+                <ArrowRight className="ml-2 h-4 w-4" />
+              </Link>
+            </motion.div>
+          )}
         </div>
 
         {/* Projects Grid */}
@@ -90,7 +93,7 @@ export function Projects() {
               transition={{ duration: 0.5, delay: index * 0.1 }}
               viewport={{ once: true }}
             >
-              <a href={project.href} className="block">
+              <Link href={project.href} className="block">
               <Card className="group relative overflow-hidden border-0 h-[350px] cursor-pointer">
                 {/* Image */}
                 <img
@@ -114,7 +117,7 @@ export function Projects() {
                   <ArrowRight className="h-5 w-5 text-white" />
                 </div>
               </Card>
-              </a>
+              </Link>
             </motion.div>
           ))}
         </div>
