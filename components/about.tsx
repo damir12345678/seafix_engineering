@@ -1,5 +1,6 @@
 "use client"
 
+import Link from "next/link"
 import { Badge } from "@/components/ui/badge"
 import { Button } from "@/components/ui/button"
 import { Check, ArrowRight } from "lucide-react"
@@ -12,7 +13,7 @@ const features = [
   "Commitment to Quality & Safety",
 ]
 
-export function About() {
+export function About({ showLink = true }: { showLink?: boolean }) {
   return (
     <section id="about" className="scroll-mt-24 py-20 lg:py-32 bg-[#0D1526]">
       <div className="container mx-auto px-4 lg:px-8">
@@ -80,17 +81,19 @@ export function About() {
               ))}
             </ul>
 
-            <Button
-              asChild
-              variant="outline"
-              size="lg"
-              className="border-white text-white hover:bg-white/10 font-semibold"
-            >
-              <a href="#about">
-                ABOUT US
-                <ArrowRight className="ml-2 h-5 w-5" />
-              </a>
-            </Button>
+            {showLink && (
+              <Button
+                asChild
+                variant="outline"
+                size="lg"
+                className="border-white text-white hover:bg-white/10 font-semibold"
+              >
+                <Link href="/about">
+                  ABOUT US
+                  <ArrowRight className="ml-2 h-5 w-5" />
+                </Link>
+              </Button>
+            )}
           </motion.div>
         </div>
       </div>

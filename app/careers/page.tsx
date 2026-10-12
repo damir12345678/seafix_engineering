@@ -22,7 +22,7 @@ export default function CareersPage() {
       <h2>How to apply</h2>
       <p>
         There is no separate application form. Use the{" "}
-        <Link href="/#contact">quote form</Link> and write the role you want
+        <Link href="/contact">quote form</Link> and write the role you want
         in the message. You can also email{" "}
         <a href="mailto:sales@seafixengineering.com">sales@seafixengineering.com</a>.
       </p>

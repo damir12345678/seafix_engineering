@@ -3,23 +3,23 @@
 import Link from "next/link"
 import { Logo } from "@/components/logo"
 import { Linkedin, Facebook, Instagram } from "lucide-react"
+import { serviceList } from "@/lib/services"
 
 const footerLinks = {
-  services: [
-    { name: "Engine Repair", href: "/#engine-repair" },
-    { name: "Shaft Line Services", href: "/#shaft-line" },
-    { name: "Ballast Tank Coating", href: "/#ballast-tank" },
-    { name: "Welding Works", href: "/#welding" },
-  ],
+  services: serviceList.map((service) => ({
+    name: service.title,
+    href: `/services/${service.slug}`,
+  })),
   industries: [
-    { name: "Commercial Shipping", href: "/#commercial-shipping" },
-    { name: "Offshore & Oil/Gas", href: "/#offshore-oil-gas" },
-    { name: "Yachts & Superyachts", href: "/#yachts" },
-    { name: "Government & Navy", href: "/#government-navy" },
+    { name: "Commercial Shipping", href: "/about#commercial-shipping" },
+    { name: "Offshore & Oil/Gas", href: "/about#offshore-oil-gas" },
+    { name: "Yachts & Superyachts", href: "/about#yachts" },
+    { name: "Government & Navy", href: "/about#government-navy" },
   ],
   company: [
-    { name: "About Us", href: "/#about" },
-    { name: "Our Projects", href: "/#projects" },
+    { name: "About Us", href: "/about" },
+    { name: "Our Projects", href: "/projects" },
+    { name: "Contact", href: "/contact" },
     { name: "Careers", href: "/careers" },
     { name: "News & Updates", href: "/news" },
   ],
@@ -39,7 +39,7 @@ export function Footer() {
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-8 pb-12 border-b border-border">
           {/* Logo & Description */}
           <div className="lg:col-span-2">
-            <Link href="/#home" className="inline-flex items-center mb-4">
+            <Link href="/" className="inline-flex items-center mb-4">
               <Logo className="h-14" />
             </Link>
             <p className="text-muted-foreground mb-6 max-w-sm">
@@ -117,7 +117,7 @@ export function Footer() {
         {/* Bottom Section */}
         <div className="pt-8 flex flex-col md:flex-row items-center justify-between gap-4">
           <p className="text-muted-foreground text-sm">
-            © 2025 SeaFix Engineering. All rights reserved.
+            © {new Date().getFullYear()} SeaFix Engineering. All rights reserved.
           </p>
           <div className="flex gap-6">
             <Link

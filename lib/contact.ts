@@ -1,8 +1,7 @@
+import { serviceList } from "@/lib/services"
+
 export const services = [
-  { value: "engine-repair", label: "Engine Repair" },
-  { value: "shaft-line", label: "Shaft Line" },
-  { value: "ballast-tank", label: "Ballast Tank Coating" },
-  { value: "welding", label: "Welding" },
+  ...serviceList.map((service) => ({ value: service.slug, label: service.title })),
   { value: "other", label: "Other" },
 ]
 

@@ -2,21 +2,26 @@
 
 import { useState, useEffect } from "react"
 import Link from "next/link"
+import { usePathname } from "next/navigation"
 import { Button } from "@/components/ui/button"
 import { Logo } from "@/components/logo"
 import { Phone, ArrowRight, Menu, X } from "lucide-react"
 
 const navLinks = [
-  { name: "Home", href: "/#home" },
-  { name: "Services", href: "/#services" },
-  { name: "About", href: "/#about" },
-  { name: "Projects", href: "/#projects" },
-  { name: "Contact", href: "/#contact" },
+  { name: "Home", href: "/" },
+  { name: "Services", href: "/services" },
+  { name: "About", href: "/about" },
+  { name: "Projects", href: "/projects" },
+  { name: "Contact", href: "/contact" },
 ]
 
 export function Header() {
   const [isScrolled, setIsScrolled] = useState(false)
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false)
+  const pathname = usePathname()
+
+  const isActive = (href: string) =>
+    href === "/" ? pathname === "/" : pathname === href || pathname.startsWith(`${href}/`)
 
   useEffect(() => {
     const handleScroll = () => {
@@ -37,7 +42,7 @@ export function Header() {
       <div className="container mx-auto px-4 lg:px-8">
         <div className="flex items-center justify-between h-20">
           {/* Logo */}
-          <Link href="/#home" className="flex items-center shrink-0" onClick={() => setIsMobileMenuOpen(false)}>
+          <Link href="/" className="flex items-center shrink-0" onClick={() => setIsMobileMenuOpen(false)}>
             <Logo className="h-12 md:h-[52px]" priority />
           </Link>
 
@@ -47,7 +52,10 @@ export function Header() {
               <Link
                 key={link.name}
                 href={link.href}
-                className="text-muted-foreground hover:text-white transition-colors text-sm font-medium"
+                aria-current={isActive(link.href) ? "page" : undefined}
+                className={`transition-colors text-sm font-medium ${
+                  isActive(link.href) ? "text-white" : "text-muted-foreground hover:text-white"
+                }`}
               >
                 {link.name}
               </Link>
@@ -64,10 +72,10 @@ export function Header() {
               <span className="text-sm">+971 4 438 9200</span>
             </a>
             <Button asChild className="bg-primary hover:bg-[#1D4ED8] text-white font-semibold">
-              <a href="/#contact">
+              <Link href="/contact">
                 GET A QUOTE
                 <ArrowRight className="ml-2 h-4 w-4" />
-              </a>
+              </Link>
             </Button>
           </div>
 
@@ -94,7 +102,10 @@ export function Header() {
               <Link
                 key={link.name}
                 href={link.href}
-                className="text-muted-foreground hover:text-white transition-colors py-2 text-lg"
+                aria-current={isActive(link.href) ? "page" : undefined}
+                className={`transition-colors py-2 text-lg ${
+                  isActive(link.href) ? "text-white" : "text-muted-foreground hover:text-white"
+                }`}
                 onClick={() => setIsMobileMenuOpen(false)}
               >
                 {link.name}
@@ -108,10 +119,10 @@ export function Header() {
               <span>+971 4 438 9200</span>
             </a>
             <Button asChild className="bg-primary hover:bg-[#1D4ED8] text-white font-semibold w-full mt-2">
-              <a href="/#contact" onClick={() => setIsMobileMenuOpen(false)}>
+              <Link href="/contact" onClick={() => setIsMobileMenuOpen(false)}>
                 GET A QUOTE
                 <ArrowRight className="ml-2 h-4 w-4" />
-              </a>
+              </Link>
             </Button>
           </nav>
         </div>

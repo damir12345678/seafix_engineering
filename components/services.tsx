@@ -1,58 +1,18 @@
 "use client"
 
+import Link from "next/link"
 import { Card } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
-import { Settings, Compass, Droplets, Flame, ArrowRight } from "lucide-react"
+import { ArrowRight } from "lucide-react"
 import { motion } from "framer-motion"
+import { serviceList } from "@/lib/services"
 
-const services = [
-  {
-    id: "engine-repair",
-    learnMoreHref: "#project-engine-overhaul",
-    icon: Settings,
-    title: "Engine Repair",
-    description:
-      "Overhaul and maintenance of marine diesel engines, turbochargers, and propulsion systems.",
-    image:
-      "https://images.unsplash.com/photo-1685720543979-e9524b3b0176?q=80&w=1470&auto=format&fit=crop",
-  },
-  {
-    id: "shaft-line",
-    learnMoreHref: "#project-shaft-line",
-    icon: Compass,
-    title: "Shaft Line Services",
-    description:
-      "Alignment, inspection, and repair of propeller shaft lines and stern tubes.",
-    image:
-      "https://images.unsplash.com/photo-1737391726794-45f1bcd7c6a2?q=80&w=1470&auto=format&fit=crop",
-  },
-  {
-    id: "ballast-tank",
-    learnMoreHref: "#project-ballast-coating",
-    icon: Droplets,
-    title: "Ballast Tank Coating",
-    description:
-      "Professional surface preparation and painting of ballast tanks to prevent corrosion.",
-    image:
-      "https://images.unsplash.com/photo-1703174360085-cd1627be78f8?q=80&w=1470&auto=format&fit=crop",
-  },
-  {
-    id: "welding",
-    learnMoreHref: "#contact",
-    icon: Flame,
-    title: "Welding Works",
-    description:
-      "Certified underwater and topside welding for hull repairs, structural elements and pipework.",
-    image:
-      "https://images.unsplash.com/photo-1504328345606-18bbc8c9d7d1?q=80&w=1470&auto=format&fit=crop",
-  },
-]
-
-export function Services() {
+export function Services({ showHeader = true }: { showHeader?: boolean }) {
   return (
-    <section id="services" className="scroll-mt-24 py-20 lg:py-32 bg-[#0A0E1A]">
+    <section id="services" className={`scroll-mt-24 bg-[#0A0E1A] ${showHeader ? "py-20 lg:py-32" : "pb-20 lg:pb-32"}`}>
       <div className="container mx-auto px-4 lg:px-8">
         {/* Header */}
+        {showHeader && (
         <div className="flex flex-col md:flex-row md:items-end md:justify-between mb-12">
           <div>
             <motion.div
@@ -85,28 +45,30 @@ export function Services() {
             transition={{ duration: 0.5, delay: 0.2 }}
             viewport={{ once: true }}
           >
-            <a
-              href="#services"
+            <Link
+              href="/services"
               className="inline-flex items-center text-primary hover:text-[#1D4ED8] font-semibold mt-4 md:mt-0 transition-colors"
             >
               VIEW ALL SERVICES
               <ArrowRight className="ml-2 h-4 w-4" />
-            </a>
+            </Link>
           </motion.div>
         </div>
+        )}
 
         {/* Services Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-          {services.map((service, index) => (
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+          {serviceList.map((service, index) => (
             <motion.div
-              key={service.id}
-              id={service.id}
+              key={service.slug}
+              id={service.slug}
               className="scroll-mt-28 h-full"
               initial={{ opacity: 0, y: 30 }}
               whileInView={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.5, delay: index * 0.1 }}
               viewport={{ once: true }}
             >
+              <Link href={`/services/${service.slug}`} className="block h-full">
               <Card className="group bg-card border-border hover:border-primary/50 transition-all duration-300 overflow-hidden h-full hover:shadow-lg hover:shadow-primary/10">
                 {/* Image */}
                 <div className="relative h-48 overflow-hidden">
@@ -129,17 +91,15 @@ export function Services() {
                     {service.title}
                   </h3>
                   <p className="text-muted-foreground text-sm mb-4">
-                    {service.description}
+                    {service.short}
                   </p>
-                  <a
-                    href={service.learnMoreHref}
-                    className="inline-flex items-center text-primary hover:text-[#1D4ED8] font-medium text-sm transition-colors group-hover:gap-2"
-                  >
+                  <span className="inline-flex items-center text-primary group-hover:text-[#3B82F6] font-medium text-sm transition-colors">
                     Learn More
                     <ArrowRight className="ml-1 h-4 w-4 transition-transform group-hover:translate-x-1" />
-                  </a>
+                  </span>
                 </div>
               </Card>
+              </Link>
             </motion.div>
           ))}
         </div>

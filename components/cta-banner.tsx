@@ -1,5 +1,6 @@
 "use client"
 
+import Link from "next/link"
 import { Button } from "@/components/ui/button"
 import { Headphones, Phone, ArrowRight } from "lucide-react"
 import { motion } from "framer-motion"
@@ -49,10 +50,10 @@ export function CTABanner() {
               variant="outline"
               className="border-white text-white hover:bg-white/20 font-semibold"
             >
-              <a href="#contact">
+              <Link href="/contact">
                 GET A QUOTE
                 <ArrowRight className="ml-2 h-5 w-5" />
-              </a>
+              </Link>
             </Button>
           </div>
         </motion.div>

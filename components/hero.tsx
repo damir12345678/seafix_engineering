@@ -1,5 +1,6 @@
 "use client"
 
+import Link from "next/link"
 import { Button } from "@/components/ui/button"
 import { Badge } from "@/components/ui/badge"
 import { ArrowRight, Clock, Globe, ShieldCheck, Award } from "lucide-react"
@@ -75,10 +76,10 @@ export function Hero() {
               size="lg"
               className="bg-primary hover:bg-[#1D4ED8] text-white font-semibold px-8"
             >
-              <a href="#services">
+              <Link href="/services">
                 OUR SERVICES
                 <ArrowRight className="ml-2 h-5 w-5" />
-              </a>
+              </Link>
             </Button>
             <Button
               asChild
@@ -86,10 +87,10 @@ export function Hero() {
               variant="outline"
               className="border-white text-white hover:bg-white/10 font-semibold px-8"
             >
-              <a href="#contact">
+              <Link href="/contact">
                 GET A QUOTE
                 <ArrowRight className="ml-2 h-5 w-5" />
-              </a>
+              </Link>
             </Button>
           </motion.div>
 

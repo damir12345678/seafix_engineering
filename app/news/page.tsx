@@ -9,17 +9,17 @@ export const metadata: Metadata = {
 
 const updates = [
   {
-    href: "/#project-engine-overhaul",
+    href: "/projects#project-engine-overhaul",
     title: "Engine overhaul on a bulk carrier",
     text: "Full diesel engine overhaul completed alongside routine propulsion checks.",
   },
   {
-    href: "/#project-shaft-line",
+    href: "/projects#project-shaft-line",
     title: "Shaft line restoration on a container ship",
     text: "Propeller shaft alignment and restoration while the vessel was in dry dock.",
   },
   {
-    href: "/#project-ballast-coating",
+    href: "/projects#project-ballast-coating",
     title: "Ballast tank coating on an oil tanker",
     text: "Surface preparation and coating to protect ballast tanks from corrosion.",
   },

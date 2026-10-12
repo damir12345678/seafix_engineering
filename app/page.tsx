@@ -6,7 +6,6 @@ import { Stats } from "@/components/stats"
 import { Industries } from "@/components/industries"
 import { Projects } from "@/components/projects"
 import { CTABanner } from "@/components/cta-banner"
-import { Contact } from "@/components/contact"
 import { Footer } from "@/components/footer"
 
 export default function Home() {
@@ -20,7 +19,6 @@ export default function Home() {
       <Industries />
       <Projects />
       <CTABanner />
-      <Contact />
       <Footer />
     </main>
   )
