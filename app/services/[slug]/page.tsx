@@ -9,6 +9,7 @@ import { Button } from "@/components/ui/button"
 import { Card } from "@/components/ui/card"
 import { ArrowRight, Check, Mail, Phone } from "lucide-react"
 import { getService, serviceList } from "@/lib/services"
+import { projectList } from "@/lib/projects"
 
 type Props = { params: Promise<{ slug: string }> }
 
@@ -32,6 +33,7 @@ export default async function ServicePage({ params }: Props) {
   if (!service) notFound()
 
   const otherServices = serviceList.filter((item) => item.slug !== service.slug)
+  const relatedProjects = projectList.filter((project) => project.service === service.slug)
   const quoteHref = `/contact?service=${service.slug}`
 
   return (
@@ -144,6 +146,35 @@ export default async function ServicePage({ params }: Props) {
           </div>
         </div>
       </section>
+
+      {relatedProjects.length > 0 && (
+        <section className="bg-[#0A0E1A] pb-16 lg:pb-24">
+          <div className="container mx-auto px-4 lg:px-8">
+            <h2 className="text-2xl md:text-3xl font-bold text-white mb-8">Recent projects</h2>
+            <div className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">
+              {relatedProjects.map((project) => (
+                <Link
+                  key={project.slug}
+                  href={`/projects/${project.slug}`}
+                  className="group overflow-hidden rounded-xl border border-border bg-card transition-colors hover:border-primary/50"
+                >
+                  <img
+                    src={project.image}
+                    alt={project.title}
+                    className="h-44 w-full object-cover transition-transform duration-500 group-hover:scale-105"
+                  />
+                  <div className="p-5">
+                    <p className="mb-1 text-xs text-muted-foreground">
+                      {project.vessel} · {project.location}
+                    </p>
+                    <h3 className="font-semibold text-white">{project.title}</h3>
+                  </div>
+                </Link>
+              ))}
+            </div>
+          </div>
+        </section>
+      )}
 
       {/* Other services */}
       <section className="bg-[#0D1526] py-16 lg:py-24">

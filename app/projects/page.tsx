@@ -21,7 +21,7 @@ export default function ProjectsPage() {
             Our <span className="text-primary">Projects</span>
           </>
         }
-        description="A selection of repair and maintenance jobs we have completed for our clients."
+        description="Case studies from engine rooms, bridges, ballast tanks and dry docks across the Gulf."
         breadcrumbs={[{ name: "Projects", href: "/projects" }]}
       />
       <Projects showLink={false} />
