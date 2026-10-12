@@ -23,7 +23,7 @@ export const projectList: Project[] = [
     service: "engine-repair",
     duration: "42 hours",
     date: "October 2025",
-    image: "/images/about.jpg",
+    image: "/images/project-engine-liner.jpg",
     summary:
       "Emergency replacement of a scuffed cylinder liner and piston on unit No. 4 of a MAN B&W 6S60MC main engine.",
     challenge:
