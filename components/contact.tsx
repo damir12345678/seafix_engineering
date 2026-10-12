@@ -12,7 +12,7 @@ import {
   SelectValue,
 } from "@/components/ui/select"
 import { Card } from "@/components/ui/card"
-import { Phone, Mail, MapPin, Clock, ArrowRight, CheckCircle2, AlertCircle, Loader2 } from "lucide-react"
+import { Phone, Mail, MapPin, Navigation, ArrowRight, CheckCircle2, AlertCircle, Loader2 } from "lucide-react"
 import { motion } from "framer-motion"
 import { useState, type FormEvent } from "react"
 import {
@@ -35,6 +35,7 @@ const contactInfo = [
     title: "Phone",
     value: "+971 4 438 9200",
     href: "tel:+97144389200",
+    note: "24/7",
   },
   {
     icon: Mail,
@@ -47,19 +48,6 @@ const contactInfo = [
     title: "Repair & Service",
     value: "repair@seafixengineering.com",
     href: "mailto:repair@seafixengineering.com",
-  },
-  {
-    icon: MapPin,
-    title: "Location",
-    value: officeAddress,
-    href: mapLinkUrl,
-    external: true,
-  },
-  {
-    icon: Clock,
-    title: "24/7 Emergency",
-    value: "Always Available",
-    href: "tel:+97144389200",
   },
 ]
 
@@ -341,50 +329,63 @@ export function Contact() {
             transition={{ duration: 0.6 }}
             viewport={{ once: true }}
           >
-            {contactInfo.map((info, index) => (
-              <motion.a
-                key={index}
-                href={info.href}
-                target={"external" in info && info.external ? "_blank" : undefined}
-                rel={"external" in info && info.external ? "noopener noreferrer" : undefined}
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.4, delay: index * 0.1 }}
-                viewport={{ once: true }}
-              >
-                <Card className="bg-card border-border hover:border-primary/50 p-6 flex items-center gap-4 transition-all duration-300 group cursor-pointer">
-                  <div className="w-14 h-14 shrink-0 rounded-lg bg-primary/10 flex items-center justify-center group-hover:bg-primary/20 transition-colors">
-                    <info.icon className="h-6 w-6 text-primary" />
+            <Card className="bg-card border-border gap-0 py-0 overflow-hidden divide-y divide-border">
+              {contactInfo.map((info) => (
+                <a
+                  key={info.title}
+                  href={info.href}
+                  className="group flex items-center gap-4 px-5 py-4 transition-colors hover:bg-primary/5"
+                >
+                  <div className="w-11 h-11 shrink-0 rounded-lg bg-primary/10 flex items-center justify-center group-hover:bg-primary/20 transition-colors">
+                    <info.icon className="h-5 w-5 text-primary" />
                   </div>
-                  <div className="min-w-0">
-                    <p className="text-muted-foreground text-sm mb-1">
+                  <div className="min-w-0 flex-1">
+                    <p className="flex items-center gap-2 text-muted-foreground text-sm">
                       {info.title}
+                      {info.note && (
+                        <span className="inline-flex items-center gap-1 rounded-full bg-green-500/10 px-2 py-0.5 text-xs font-medium text-green-400">
+                          <span className="h-1.5 w-1.5 rounded-full bg-green-400" />
+                          {info.note}
+                        </span>
+                      )}
                     </p>
                     <p className="text-white font-semibold wrap-anywhere">{info.value}</p>
                   </div>
-                </Card>
-              </motion.a>
-            ))}
+                  <ArrowRight className="h-4 w-4 shrink-0 text-muted-foreground transition-all group-hover:translate-x-0.5 group-hover:text-primary" />
+                </a>
+              ))}
+            </Card>
 
             {/* Office map */}
-            <Card className="bg-card border-border overflow-hidden p-0 gap-0">
+            <Card className="bg-card border-border gap-0 py-0 overflow-hidden">
               <iframe
                 title="SeaFix Engineering office on the map"
                 src={mapEmbedUrl}
-                className="block w-full h-[280px] border-0"
+                className="block w-full h-[260px] border-0"
                 loading="lazy"
                 referrerPolicy="no-referrer-when-downgrade"
                 allowFullScreen
               />
-              <a
-                href={mapLinkUrl}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="flex items-start gap-2 p-4 text-sm text-white hover:text-primary transition-colors"
-              >
-                <MapPin className="mt-0.5 h-5 w-5 shrink-0 text-primary" />
-                <span>{officeAddress}</span>
-              </a>
+              <div className="flex flex-col gap-4 p-5 sm:flex-row sm:items-center sm:justify-between">
+                <div className="flex items-start gap-3 min-w-0">
+                  <MapPin className="mt-0.5 h-5 w-5 shrink-0 text-primary" />
+                  <div>
+                    <p className="text-white font-semibold">Dubai Office</p>
+                    <p className="text-sm text-muted-foreground">{officeAddress}</p>
+                  </div>
+                </div>
+                <Button
+                  asChild
+                  variant="outline"
+                  size="sm"
+                  className="shrink-0 border-primary/50 text-primary hover:bg-primary/10 hover:text-primary"
+                >
+                  <a href={mapLinkUrl} target="_blank" rel="noopener noreferrer">
+                    <Navigation className="h-4 w-4" />
+                    Directions
+                  </a>
+                </Button>
+              </div>
             </Card>
           </motion.div>
         </div>
