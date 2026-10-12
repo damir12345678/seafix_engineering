@@ -24,7 +24,7 @@ export default function CareersPage() {
         There is no separate application form. Use the{" "}
         <Link href="/#contact">quote form</Link> and write the role you want
         in the message. You can also email{" "}
-        <a href="mailto:info@seafix.com">info@seafix.com</a>.
+        <a href="mailto:sales@seafixengineering.com">sales@seafixengineering.com</a>.
       </p>
     </InfoPage>
   )

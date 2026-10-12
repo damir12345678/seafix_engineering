@@ -26,7 +26,7 @@ export default function TermsPage() {
       </p>
       <p>
         Questions about these terms:{" "}
-        <a href="mailto:info@seafix.com">info@seafix.com</a>.
+        <a href="mailto:sales@seafixengineering.com">sales@seafixengineering.com</a>.
       </p>
     </InfoPage>
   )
