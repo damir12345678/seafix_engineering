@@ -97,11 +97,11 @@ export function WorkMap() {
           minZoom: 2,
           scrollWheelZoom: false,
         })
-        L.tileLayer("https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png", {
+        // OpenStreetMap tiles need no API key; CSS below turns them dark.
+        L.tileLayer("https://tile.openstreetmap.org/{z}/{x}/{y}.png", {
           attribution:
-            '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> &copy; <a href="https://carto.com/attributions">CARTO</a>',
-          subdomains: "abcd",
-          maxZoom: 18,
+            '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
+          maxZoom: 19,
         }).addTo(map)
         map.fitBounds(
           workLocations.map((location) => [location.lat, location.lng]),
@@ -184,6 +184,7 @@ export function WorkMap() {
         }
         .sf-dot { display: block; width: 14px; height: 14px; border-radius: 9999px; border: 2px solid #0A0E1A; }
         .sf-map .leaflet-container { background: #0A0E1A; font-family: var(--font-poppins), sans-serif; }
+        .sf-map .leaflet-tile-pane { filter: invert(1) hue-rotate(180deg) brightness(0.9) contrast(0.9) saturate(0.5); }
         .sf-map .leaflet-popup-content-wrapper, .sf-map .leaflet-popup-tip { background: #111827; color: #fff; border: 1px solid #1F2937; }
         .sf-map .leaflet-popup-content { margin: 12px 14px; }
         .sf-popup { display: flex; flex-direction: column; gap: 2px; font-size: 13px; }
