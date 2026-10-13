@@ -1,5 +1,12 @@
 import { NextResponse } from "next/server"
-import { emptyForm, services, validateForm, type FormValues } from "@/lib/contact"
+import {
+  emptyForm,
+  MAX_PHOTOS,
+  MAX_PHOTOS_TOTAL_BYTES,
+  services,
+  validateForm,
+  type FormValues,
+} from "@/lib/contact"
 
 function escapeHtml(value: string) {
   return value
@@ -10,25 +17,46 @@ function escapeHtml(value: string) {
     .replace(/'/g, "&#39;")
 }
 
+function safeFilename(name: string, index: number) {
+  const cleaned = name.replace(/[^\w.-]+/g, "_").slice(-80)
+  return cleaned || `photo-${index + 1}.jpg`
+}
+
 export async function POST(request: Request) {
-  let body: Record<string, unknown>
+  let form: FormData
   try {
-    body = await request.json()
+    form = await request.formData()
   } catch {
     return NextResponse.json({ error: "Invalid request." }, { status: 400 })
   }
 
   // Honeypot: real visitors never fill this hidden field.
-  if (typeof body.website === "string" && body.website.trim()) {
+  const website = form.get("website")
+  if (typeof website === "string" && website.trim()) {
     return NextResponse.json({ ok: true })
   }
 
   const values = Object.fromEntries(
     Object.keys(emptyForm).map((field) => {
-      const value = body[field]
+      const value = form.get(field)
       return [field, typeof value === "string" ? value.trim() : ""]
     }),
   ) as FormValues
+
+  const photos = form
+    .getAll("photos")
+    .filter((item): item is File => typeof item !== "string" && item.size > 0)
+  const photosSize = photos.reduce((total, photo) => total + photo.size, 0)
+  if (
+    photos.length > MAX_PHOTOS ||
+    photosSize > MAX_PHOTOS_TOTAL_BYTES ||
+    photos.some((photo) => !photo.type.startsWith("image/"))
+  ) {
+    return NextResponse.json(
+      { error: `Attach up to ${MAX_PHOTOS} photos, 4 MB in total.` },
+      { status: 400 },
+    )
+  }
 
   const errors = validateForm(values)
   if (Object.keys(errors).length > 0) {
@@ -50,6 +78,9 @@ export async function POST(request: Request) {
     ["Phone", values.phone || "—"],
     ["Service", serviceLabel],
     ["Vessel type", values.vessel || "—"],
+    ["Port / location", values.port || "—"],
+    ["Vessel ETA", values.eta || "—"],
+    ["Photos", photos.length ? `${photos.length} attached` : "—"],
   ]
 
   const html = `
@@ -67,6 +98,13 @@ export async function POST(request: Request) {
   `
   const text = `${rows.map(([label, value]) => `${label}: ${value}`).join("\n")}\n\nMessage:\n${values.message}`
 
+  const attachments = await Promise.all(
+    photos.map(async (photo, index) => ({
+      filename: safeFilename(photo.name, index),
+      content: Buffer.from(await photo.arrayBuffer()).toString("base64"),
+    })),
+  )
+
   const response = await fetch("https://api.resend.com/emails", {
     method: "POST",
     headers: {
@@ -80,6 +118,7 @@ export async function POST(request: Request) {
       subject: `Quote request: ${serviceLabel} — ${values.name}`,
       html,
       text,
+      ...(attachments.length ? { attachments } : {}),
     }),
   })
 

@@ -11,6 +11,8 @@ export const emptyForm = {
   phone: "",
   service: "",
   vessel: "",
+  port: "",
+  eta: "",
   message: "",
 }
 
@@ -26,8 +28,15 @@ export const maxLengths: Record<keyof FormValues, number> = {
   phone: 40,
   service: 50,
   vessel: 100,
+  port: 120,
+  eta: 60,
   message: 5000,
 }
+
+// Photos attached to a request. Vercel functions accept bodies up to 4.5 MB,
+// so the browser shrinks photos before upload and the total stays under 4 MB.
+export const MAX_PHOTOS = 5
+export const MAX_PHOTOS_TOTAL_BYTES = 4 * 1024 * 1024
 
 export function validateForm(values: FormValues): FormErrors {
   const errors: FormErrors = {}

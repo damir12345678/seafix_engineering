@@ -10,10 +10,20 @@ const poppins = Poppins({
 })
 
 export const metadata: Metadata = {
-  title: 'SeaFix Engineering | Maritime Repair & Maintenance Solutions',
-  description: 'SeaFix Engineering delivers reliable repair, maintenance and engineering solutions for vessels of all types. 24/7 global maritime support.',
-  generator: 'v0.app',
-  keywords: ['maritime engineering', 'ship repair', 'vessel maintenance', 'marine services', 'engine repair', 'welding'],
+  metadataBase: new URL('https://seafixengineering.com'),
+  title: 'SeaFix Engineering | Marine Engineering & Ship Repair, Dubai',
+  description: 'SeaFix Engineering delivers engine, electrical, navigation, shaft line, coating and welding repairs for vessels in ports, anchorages and shipyards worldwide. 24/7 support from Dubai.',
+  keywords: ['marine engineering', 'ship repair', 'vessel maintenance', 'engine repair', 'fly electrician', 'shaft alignment', 'ballast tank coating', 'welding', 'Dubai'],
+  openGraph: {
+    type: 'website',
+    siteName: 'SeaFix Engineering',
+    url: '/',
+    title: 'SeaFix Engineering | Marine Engineering & Ship Repair',
+    description: 'Engine, electrical, navigation, shaft line, coating and welding repairs for vessels worldwide. 24/7 support from Dubai.',
+  },
+  twitter: {
+    card: 'summary_large_image',
+  },
   icons: {
     icon: [
       {
