@@ -4,6 +4,7 @@ import { PageHero } from "@/components/page-hero"
 import { Services } from "@/components/services"
 import { CTABanner } from "@/components/cta-banner"
 import { Footer } from "@/components/footer"
+import { HowWeWork } from "@/components/how-we-work"
 
 export const metadata: Metadata = {
   title: "Services | SeaFix Engineering",
@@ -29,6 +30,7 @@ export default function ServicesPage() {
       <div className="bg-[#0A0E1A] pt-16 lg:pt-20">
         <Services showHeader={false} />
       </div>
+      <HowWeWork />
       <CTABanner />
       <Footer />
     </main>

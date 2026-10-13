@@ -12,6 +12,7 @@ const navLinks = [
   { name: "Services", href: "/services" },
   { name: "About", href: "/about" },
   { name: "Projects", href: "/projects" },
+  { name: "Worldwide", href: "/where-we-work" },
   { name: "Contact", href: "/contact" },
 ]
 
@@ -47,7 +48,7 @@ export function Header() {
           </Link>
 
           {/* Desktop Navigation */}
-          <nav className="hidden lg:flex items-center gap-8">
+          <nav className="hidden lg:flex items-center gap-6 xl:gap-8">
             {navLinks.map((link) => (
               <Link
                 key={link.name}
@@ -66,7 +67,7 @@ export function Header() {
           <div className="hidden lg:flex items-center gap-6">
             <a
               href="tel:+97144389200"
-              className="flex items-center gap-2 text-muted-foreground hover:text-white transition-colors"
+              className="hidden xl:flex items-center gap-2 text-muted-foreground hover:text-white transition-colors"
             >
               <Phone className="h-4 w-4" />
               <span className="text-sm">+971 4 438 9200</span>

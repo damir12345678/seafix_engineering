@@ -6,6 +6,8 @@ import { Stats } from "@/components/stats"
 import { Industries } from "@/components/industries"
 import { CTABanner } from "@/components/cta-banner"
 import { Footer } from "@/components/footer"
+import { AcceptedBy } from "@/components/accepted-by"
+import { Testimonials } from "@/components/testimonials"
 
 export const metadata: Metadata = {
   title: "About Us | SeaFix Engineering",
@@ -30,7 +32,9 @@ export default function AboutPage() {
       />
       <About showLink={false} />
       <Stats />
+      <AcceptedBy />
       <Industries />
+      <Testimonials />
       <CTABanner />
       <Footer />
     </main>

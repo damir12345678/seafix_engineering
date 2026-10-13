@@ -12,11 +12,13 @@ import {
   SelectValue,
 } from "@/components/ui/select"
 import { Card } from "@/components/ui/card"
-import { Phone, Mail, MapPin, Navigation, ArrowRight, CheckCircle2, AlertCircle, Loader2 } from "lucide-react"
+import { Phone, Mail, MapPin, Navigation, ArrowRight, CheckCircle2, AlertCircle, Loader2, ImagePlus, X } from "lucide-react"
 import { motion } from "framer-motion"
-import { useEffect, useState, type FormEvent } from "react"
+import { useEffect, useRef, useState, type ChangeEvent, type FormEvent } from "react"
 import {
   emptyForm,
+  MAX_PHOTOS,
+  MAX_PHOTOS_TOTAL_BYTES,
   services,
   validateForm,
   type FormErrors,
@@ -51,6 +53,30 @@ const contactInfo = [
   },
 ]
 
+type Photo = { file: File; url: string }
+
+// Shrink a photo in the browser so several of them fit into one request.
+async function shrinkPhoto(file: File): Promise<File> {
+  try {
+    const bitmap = await createImageBitmap(file)
+    const scale = Math.min(1, 1600 / Math.max(bitmap.width, bitmap.height))
+    const canvas = document.createElement("canvas")
+    canvas.width = Math.round(bitmap.width * scale)
+    canvas.height = Math.round(bitmap.height * scale)
+    canvas.getContext("2d")?.drawImage(bitmap, 0, 0, canvas.width, canvas.height)
+    bitmap.close()
+    const blob = await new Promise<Blob | null>((resolve) =>
+      canvas.toBlob(resolve, "image/jpeg", 0.8),
+    )
+    if (!blob) return file
+    const name = file.name.replace(/\.[^.]+$/, "") + ".jpg"
+    return new File([blob], name, { type: "image/jpeg" })
+  } catch {
+    // Formats the browser cannot decode are sent as they are.
+    return file
+  }
+}
+
 function fieldClass(hasError: boolean) {
   return `bg-card text-white placeholder:text-muted-foreground h-12 ${
     hasError ? "border-red-500 focus:border-red-500" : "border-border focus:border-primary"
@@ -64,6 +90,44 @@ export function Contact() {
   const [sent, setSent] = useState(false)
   const [submitError, setSubmitError] = useState<string | null>(null)
   const [formKey, setFormKey] = useState(0)
+  const [photos, setPhotos] = useState<Photo[]>([])
+  const [photoError, setPhotoError] = useState<string | null>(null)
+  const photoInput = useRef<HTMLInputElement>(null)
+
+  async function addPhotos(event: ChangeEvent<HTMLInputElement>) {
+    const picked = Array.from(event.target.files ?? []).filter((file) =>
+      file.type.startsWith("image/"),
+    )
+    event.target.value = ""
+    if (!picked.length) return
+    setPhotoError(null)
+    setSent(false)
+
+    const room = MAX_PHOTOS - photos.length
+    if (picked.length > room) {
+      setPhotoError(`You can attach up to ${MAX_PHOTOS} photos.`)
+    }
+    const shrunk = await Promise.all(picked.slice(0, Math.max(room, 0)).map(shrinkPhoto))
+    let total = photos.reduce((sum, photo) => sum + photo.file.size, 0)
+    const accepted: Photo[] = []
+    for (const file of shrunk) {
+      if (total + file.size > MAX_PHOTOS_TOTAL_BYTES) {
+        setPhotoError("Photos are too large. Attach fewer or smaller photos (4 MB in total).")
+        break
+      }
+      total += file.size
+      accepted.push({ file, url: URL.createObjectURL(file) })
+    }
+    setPhotos((current) => [...current, ...accepted])
+  }
+
+  function removePhoto(index: number) {
+    setPhotos((current) => {
+      URL.revokeObjectURL(current[index].url)
+      return current.filter((_, i) => i !== index)
+    })
+    setPhotoError(null)
+  }
 
   // Preselect the service when arriving from a service page (/contact?service=slug).
   useEffect(() => {
@@ -90,16 +154,15 @@ export function Contact() {
       return
     }
 
-    const website = new FormData(event.currentTarget).get("website")
+    const body = new FormData()
+    for (const [field, value] of Object.entries(values)) body.append(field, value)
+    body.append("website", String(new FormData(event.currentTarget).get("website") ?? ""))
+    for (const photo of photos) body.append("photos", photo.file)
 
     setSending(true)
     setSent(false)
     try {
-      const response = await fetch("/api/contact", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ ...values, website }),
-      })
+      const response = await fetch("/api/contact", { method: "POST", body })
       const data = await response.json().catch(() => ({}))
 
       if (!response.ok) {
@@ -107,13 +170,18 @@ export function Contact() {
         setSubmitError(
           data.errors
             ? "Please check the highlighted fields."
-            : "Something went wrong. Please try again or email us at sales@seafixengineering.com.",
+            : response.status === 400 && data.error
+              ? data.error
+              : "Something went wrong. Please try again or email us at sales@seafixengineering.com.",
         )
         return
       }
 
       setSent(true)
       setValues(emptyForm)
+      photos.forEach((photo) => URL.revokeObjectURL(photo.url))
+      setPhotos([])
+      setPhotoError(null)
       setFormKey((key) => key + 1)
     } catch {
       setSubmitError("Network error. Please check your connection and try again.")
@@ -285,6 +353,23 @@ export function Contact() {
                 className="bg-card border-border text-white placeholder:text-muted-foreground focus:border-primary h-12"
               />
 
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <Input
+                  name="port"
+                  placeholder="Port / Vessel Location"
+                  value={values.port}
+                  onChange={(event) => updateField("port", event.target.value)}
+                  className="bg-card border-border text-white placeholder:text-muted-foreground focus:border-primary h-12"
+                />
+                <Input
+                  name="eta"
+                  placeholder="Vessel ETA (e.g. 20 Oct, 08:00)"
+                  value={values.eta}
+                  onChange={(event) => updateField("eta", event.target.value)}
+                  className="bg-card border-border text-white placeholder:text-muted-foreground focus:border-primary h-12"
+                />
+              </div>
+
               <div>
                 <Textarea
                   name="message"
@@ -306,6 +391,48 @@ export function Contact() {
                     {errors.message}
                   </p>
                 )}
+              </div>
+
+              <div>
+                <input
+                  ref={photoInput}
+                  type="file"
+                  accept="image/*"
+                  multiple
+                  onChange={addPhotos}
+                  className="hidden"
+                />
+                <button
+                  type="button"
+                  onClick={() => photoInput.current?.click()}
+                  disabled={photos.length >= MAX_PHOTOS}
+                  className="flex w-full items-center justify-center gap-2 rounded-md border border-dashed border-border bg-card px-4 py-4 text-sm text-muted-foreground transition-colors hover:border-primary hover:text-white disabled:cursor-not-allowed disabled:opacity-50"
+                >
+                  <ImagePlus className="h-5 w-5 text-primary" />
+                  Attach photos of the damage (optional, up to {MAX_PHOTOS})
+                </button>
+                {photos.length > 0 && (
+                  <ul className="mt-3 flex flex-wrap gap-3">
+                    {photos.map((photo, index) => (
+                      <li key={photo.url} className="relative">
+                        <img
+                          src={photo.url}
+                          alt={`Attached photo ${index + 1}`}
+                          className="h-20 w-20 rounded-md border border-border object-cover"
+                        />
+                        <button
+                          type="button"
+                          onClick={() => removePhoto(index)}
+                          aria-label={`Remove photo ${index + 1}`}
+                          className="absolute -right-2 -top-2 flex h-6 w-6 items-center justify-center rounded-full bg-[#0A0E1A] border border-border text-white hover:bg-red-500"
+                        >
+                          <X className="h-3.5 w-3.5" />
+                        </button>
+                      </li>
+                    ))}
+                  </ul>
+                )}
+                {photoError && <p className="mt-1.5 text-sm text-red-400">{photoError}</p>}
               </div>
 
               <Button
